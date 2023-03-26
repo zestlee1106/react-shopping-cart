@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Product } from "../../types/product";
 import { formatPrice } from "../../utils/common";
@@ -6,6 +6,8 @@ import { formatPrice } from "../../utils/common";
 interface CartProductProps {
   product: Product;
   cartQuantity: number;
+  onChangeSelectStatus: Function;
+  onChangeQuantity: Function;
 }
 
 const NUMBER_CONTROL = {
@@ -13,8 +15,14 @@ const NUMBER_CONTROL = {
   DOWN: "down",
 };
 
-function CartProduct({ product, cartQuantity }: CartProductProps) {
+function CartProduct({
+  product,
+  cartQuantity,
+  onChangeSelectStatus,
+  onChangeQuantity,
+}: CartProductProps) {
   const [quantity, setQuantity] = useState(cartQuantity);
+  const [isSelect, setIsSelect] = useState(true);
 
   const onClick = (control: string) => {
     if (control === NUMBER_CONTROL.UP) {
@@ -33,7 +41,9 @@ function CartProduct({ product, cartQuantity }: CartProductProps) {
     setQuantity((quantity) => quantity - 1);
   };
 
-  const onChangeCheckbox = () => {};
+  const onChangeCheckbox = () => {
+    setIsSelect((isSelect) => !isSelect);
+  };
   const onChangeInput = (e: React.FormEvent<HTMLInputElement>) => {
     const value = Number(e.currentTarget.value);
 
@@ -49,6 +59,14 @@ function CartProduct({ product, cartQuantity }: CartProductProps) {
     setQuantity(value);
   };
 
+  useEffect(() => {
+    onChangeQuantity();
+  }, [quantity, onChangeQuantity]);
+
+  useEffect(() => {
+    onChangeSelectStatus();
+  }, [isSelect, onChangeSelectStatus]);
+
   return (
     <>
       <Container>
@@ -56,7 +74,7 @@ function CartProduct({ product, cartQuantity }: CartProductProps) {
           <Checkbox
             name="checkbox"
             type="checkbox"
-            checked={true}
+            checked={isSelect}
             onChange={onChangeCheckbox}
           />
           <Img src={product.imageUrl} alt={product.name} />

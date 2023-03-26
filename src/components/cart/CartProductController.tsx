@@ -8,6 +8,8 @@ interface ProductControllerProps {
 
 function LeftSection({ carts }: ProductControllerProps) {
   const onChange = () => {};
+  const onChangeSelectStatus = () => {};
+  const onChangeQuantity = () => {};
 
   return (
     <Section>
@@ -30,6 +32,8 @@ function LeftSection({ carts }: ProductControllerProps) {
           key={idx}
           product={cart.product}
           cartQuantity={cart.quantity}
+          onChangeSelectStatus={onChangeSelectStatus}
+          onChangeQuantity={onChangeQuantity}
         />
       ))}
     </Section>
