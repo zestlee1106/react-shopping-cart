@@ -60,7 +60,7 @@ function CartProduct({
   };
 
   useEffect(() => {
-    onChangeQuantity();
+    onChangeQuantity(quantity);
   }, [quantity, onChangeQuantity]);
 
   useEffect(() => {

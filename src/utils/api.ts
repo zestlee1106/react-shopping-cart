@@ -16,4 +16,7 @@ export const api = {
 
   post: <TBody extends BodyInit, TResponse>(url: string, body: TBody) =>
     request<TResponse>(url, { method: "POST", body }),
+
+  patch: <TBody extends BodyInit, TResponse>(url: string, body: TBody) =>
+    request<TResponse>(url, { method: "PATCH", body }),
 };

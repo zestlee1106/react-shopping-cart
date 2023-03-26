@@ -1,3 +1,4 @@
+import { Cart } from "./../types/cart";
 import { rest } from "msw";
 import MOCK from "./data.json";
 import { Product } from "../types/product";
@@ -22,6 +23,19 @@ export const handlers = [
       product,
     };
     state.carts.push(cart);
+    await sleep(200);
+    return res(ctx.status(200), ctx.json(state.carts));
+  }),
+  rest.patch(`/carts`, async (req, res, ctx) => {
+    const newCart = JSON.parse(req.body as string) as Cart;
+    const cartId = state.carts.findIndex((cart) => cart.id === newCart.id);
+
+    if (cartId < 0) {
+      return;
+    }
+
+    state.carts[cartId].quantity = newCart.quantity;
+
     await sleep(200);
     return res(ctx.status(200), ctx.json(state.carts));
   }),

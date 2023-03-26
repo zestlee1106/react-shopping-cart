@@ -4,12 +4,21 @@ import CartProduct from "./CartProduct";
 
 interface ProductControllerProps {
   carts: Cart[];
+  onChangeCarts: Function;
 }
 
-function LeftSection({ carts }: ProductControllerProps) {
+function CartProductController({
+  carts,
+  onChangeCarts,
+}: ProductControllerProps) {
   const onChange = () => {};
   const onChangeSelectStatus = () => {};
-  const onChangeQuantity = () => {};
+  const onChangeQuantity = (idx: number) => (quantity: number) => {
+    let newCart = { ...carts[idx] };
+    newCart.quantity = quantity;
+
+    onChangeCarts(newCart);
+  };
 
   return (
     <Section>
@@ -33,7 +42,7 @@ function LeftSection({ carts }: ProductControllerProps) {
           product={cart.product}
           cartQuantity={cart.quantity}
           onChangeSelectStatus={onChangeSelectStatus}
-          onChangeQuantity={onChangeQuantity}
+          onChangeQuantity={onChangeQuantity(idx)}
         />
       ))}
     </Section>
@@ -105,4 +114,4 @@ const CartTitleDivide = styled.hr`
   margin-top: 10px;
 `;
 
-export default LeftSection;
+export default CartProductController;

@@ -18,9 +18,13 @@ function Cart() {
     })();
   }, []);
 
+  const onChangeCarts = async (cart: CartType) => {
+    await api.patch<string, CartType>("/carts", JSON.stringify(cart));
+  };
+
   return (
     <>
-      <CartProductController carts={carts} />
+      <CartProductController carts={carts} onChangeCarts={onChangeCarts} />
       <CartPaymentController />
     </>
   );
