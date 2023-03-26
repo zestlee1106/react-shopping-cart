@@ -61,11 +61,11 @@ function CartProduct({
 
   useEffect(() => {
     onChangeQuantity(quantity);
-  }, [quantity, onChangeQuantity]);
+  }, [quantity]);
 
   useEffect(() => {
-    onChangeSelectStatus();
-  }, [isSelect, onChangeSelectStatus]);
+    onChangeSelectStatus(isSelect);
+  }, [isSelect]);
 
   return (
     <>

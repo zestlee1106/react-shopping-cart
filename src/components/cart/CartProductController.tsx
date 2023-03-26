@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Cart } from "../../types/cart";
 import CartProduct from "./CartProduct";
@@ -5,20 +6,38 @@ import CartProduct from "./CartProduct";
 interface ProductControllerProps {
   carts: Cart[];
   onChangeCarts: Function;
+  onChangeCartsSelect: Function;
 }
 
 function CartProductController({
   carts,
   onChangeCarts,
+  onChangeCartsSelect,
 }: ProductControllerProps) {
+  const [selectedCarts, setSelectedCarts] = useState<number[]>([]);
+
   const onChange = () => {};
-  const onChangeSelectStatus = () => {};
+  const onChangeSelectStatus = (idx: number) => (isSelect: boolean) => {
+    if (!isSelect) {
+      setSelectedCarts((carts) => carts.filter((cart, i) => i !== idx));
+      return;
+    }
+    setSelectedCarts((carts) => {
+      let newCarts = [...carts];
+      newCarts.push(idx);
+      return newCarts;
+    });
+  };
   const onChangeQuantity = (idx: number) => (quantity: number) => {
     let newCart = { ...carts[idx] };
     newCart.quantity = quantity;
 
     onChangeCarts(newCart);
   };
+
+  useEffect(() => {
+    onChangeCartsSelect(selectedCarts);
+  }, [selectedCarts]);
 
   return (
     <Section>
@@ -41,7 +60,7 @@ function CartProductController({
           key={idx}
           product={cart.product}
           cartQuantity={cart.quantity}
-          onChangeSelectStatus={onChangeSelectStatus}
+          onChangeSelectStatus={onChangeSelectStatus(idx)}
           onChangeQuantity={onChangeQuantity(idx)}
         />
       ))}
