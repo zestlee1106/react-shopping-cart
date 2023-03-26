@@ -1,24 +1,50 @@
+import { useState } from "react";
 import styled from "styled-components";
+import { Product } from "../../types/product";
+import { formatPrice } from "../../utils/common";
 
-function Product() {
+interface CartProductProps {
+  product: Product;
+}
+
+const NUMBER_CONTROL = {
+  UP: "up",
+  DOWN: "down",
+};
+
+function CartProduct({ product }: CartProductProps) {
+  const [quantity, setQuantity] = useState(1);
+
+  const onClick = (control: string) => {
+    if (control === NUMBER_CONTROL.UP) {
+      setQuantity((quantity) => quantity++);
+      return;
+    }
+    setQuantity((quantity) => quantity--);
+  };
+
   return (
     <>
       <Container>
         <Box>
           <Checkbox name="checkbox" type="checkbox" checked={true} />
-          <Img src="images/product.png" alt="PET보틀-정사각(420ml)" />
-          <CartName>PET보틀-정사각(420ml)</CartName>
+          <Img src={product.imageUrl} alt={product.name} />
+          <CartName>{product.name}</CartName>
         </Box>
         <RightSide>
           <TrashImg src="svgs/trash.svg" alt="삭제" />
           <NumberInputContainer>
-            <NumberInput type="number" value="1" />
+            <NumberInput type="number" value={quantity} />
             <div>
-              <NumberInputButton>▲</NumberInputButton>
-              <NumberInputButton>▼</NumberInputButton>
+              <NumberInputButton onClick={() => onClick(NUMBER_CONTROL.UP)}>
+                ▲
+              </NumberInputButton>
+              <NumberInputButton onClick={() => onClick(NUMBER_CONTROL.DOWN)}>
+                ▼
+              </NumberInputButton>
             </div>
           </NumberInputContainer>
-          <CartPrice>123,456원</CartPrice>
+          <CartPrice>{formatPrice(product.price)}원</CartPrice>
         </RightSide>
       </Container>
       <DivideLine />
@@ -126,4 +152,4 @@ const DivideLine = styled.hr`
   margin-top: 10px;
 `;
 
-export default Product;
+export default CartProduct;

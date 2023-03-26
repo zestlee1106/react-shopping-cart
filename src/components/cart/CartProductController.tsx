@@ -1,7 +1,12 @@
 import styled from "styled-components";
-import Product from "./Product";
+import { Cart } from "../../types/cart";
+import CartProduct from "./CartProduct";
 
-function LeftSection() {
+interface ProductControllerProps {
+  carts: Cart[];
+}
+
+function LeftSection({ carts }: ProductControllerProps) {
   return (
     <Section>
       <CheckboxHeader>
@@ -13,10 +18,9 @@ function LeftSection() {
       </CheckboxHeader>
       <CartTitle>든든배송 상품(3개)</CartTitle>
       <CartTitleDivide />
-      <Product />
-      <Product />
-      <Product />
-      <Product />
+      {carts.map((cart, idx) => (
+        <CartProduct key={idx} product={cart.product} />
+      ))}
     </Section>
   );
 }
