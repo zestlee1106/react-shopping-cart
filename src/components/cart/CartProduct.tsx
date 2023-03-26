@@ -34,7 +34,20 @@ function CartProduct({ product, cartQuantity }: CartProductProps) {
   };
 
   const onChangeCheckbox = () => {};
-  const onChangeInput = () => {};
+  const onChangeInput = (e: React.FormEvent<HTMLInputElement>) => {
+    const value = Number(e.currentTarget.value);
+
+    if (value > 20) {
+      return;
+    }
+
+    if (value === 0) {
+      setQuantity(1);
+      return;
+    }
+
+    setQuantity(value);
+  };
 
   return (
     <>
