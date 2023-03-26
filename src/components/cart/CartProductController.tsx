@@ -7,11 +7,18 @@ interface ProductControllerProps {
 }
 
 function LeftSection({ carts }: ProductControllerProps) {
+  const onChange = () => {};
+
   return (
     <Section>
       <CheckboxHeader>
         <CheckboxContainer>
-          <Checkbox name="checkbox" type="checkbox" checked={true} />
+          <Checkbox
+            name="checkbox"
+            type="checkbox"
+            checked={true}
+            onChange={onChange}
+          />
           <Label>선택해제</Label>
         </CheckboxContainer>
         <DeleteButton>상품삭제</DeleteButton>
@@ -69,7 +76,7 @@ const Checkbox = styled.input`
   }
 `;
 
-const Label = styled.label.attrs({ for: "checkbox" })`
+const Label = styled.label.attrs({ htmlFor: "checkbox" })`
   padding-left: 7px;
 `;
 

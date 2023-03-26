@@ -23,18 +23,30 @@ function CartProduct({ product }: CartProductProps) {
     setQuantity((quantity) => quantity--);
   };
 
+  const onChangeCheckbox = () => {};
+  const onChangeInput = () => {};
+
   return (
     <>
       <Container>
         <Box>
-          <Checkbox name="checkbox" type="checkbox" checked={true} />
+          <Checkbox
+            name="checkbox"
+            type="checkbox"
+            checked={true}
+            onChange={onChangeCheckbox}
+          />
           <Img src={product.imageUrl} alt={product.name} />
           <CartName>{product.name}</CartName>
         </Box>
         <RightSide>
           <TrashImg src="svgs/trash.svg" alt="삭제" />
           <NumberInputContainer>
-            <NumberInput type="number" value={quantity} />
+            <NumberInput
+              type="number"
+              value={quantity}
+              onChange={onChangeInput}
+            />
             <div>
               <NumberInputButton onClick={() => onClick(NUMBER_CONTROL.UP)}>
                 ▲
