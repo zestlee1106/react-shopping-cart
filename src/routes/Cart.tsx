@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import LeftSection from "../components/cart/CartProductController";
+import CartPaymentController from "../components/cart/CartPaymentController";
+import CartProductController from "../components/cart/CartProductController";
 import { Cart as CartType } from "../types/cart";
 import { api } from "../utils/api";
 
@@ -17,7 +18,12 @@ function Cart() {
     })();
   }, []);
 
-  return <LeftSection carts={carts} />;
+  return (
+    <>
+      <CartProductController carts={carts} />
+      <CartPaymentController />
+    </>
+  );
 }
 
 export default Cart;

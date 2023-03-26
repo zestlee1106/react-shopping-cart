@@ -18,6 +18,7 @@ export const handlers = [
     const product = JSON.parse(req.body as string) as Product;
     const cart = {
       id: Date.now(),
+      quantity: 1,
       product,
     };
     state.carts.push(cart);

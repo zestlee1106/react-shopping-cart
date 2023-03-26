@@ -23,10 +23,14 @@ function LeftSection({ carts }: ProductControllerProps) {
         </CheckboxContainer>
         <DeleteButton>상품삭제</DeleteButton>
       </CheckboxHeader>
-      <CartTitle>든든배송 상품(3개)</CartTitle>
+      <CartTitle>든든배송 상품({carts.length}개)</CartTitle>
       <CartTitleDivide />
       {carts.map((cart, idx) => (
-        <CartProduct key={idx} product={cart.product} />
+        <CartProduct
+          key={idx}
+          product={cart.product}
+          cartQuantity={cart.quantity}
+        />
       ))}
     </Section>
   );

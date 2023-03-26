@@ -5,6 +5,7 @@ import { formatPrice } from "../../utils/common";
 
 interface CartProductProps {
   product: Product;
+  cartQuantity: number;
 }
 
 const NUMBER_CONTROL = {
@@ -12,15 +13,24 @@ const NUMBER_CONTROL = {
   DOWN: "down",
 };
 
-function CartProduct({ product }: CartProductProps) {
-  const [quantity, setQuantity] = useState(1);
+function CartProduct({ product, cartQuantity }: CartProductProps) {
+  const [quantity, setQuantity] = useState(cartQuantity);
 
   const onClick = (control: string) => {
     if (control === NUMBER_CONTROL.UP) {
-      setQuantity((quantity) => quantity++);
+      if (quantity === 20) {
+        return;
+      }
+
+      setQuantity((quantity) => quantity + 1);
       return;
     }
-    setQuantity((quantity) => quantity--);
+
+    if (quantity === 1) {
+      return;
+    }
+
+    setQuantity((quantity) => quantity - 1);
   };
 
   const onChangeCheckbox = () => {};
@@ -56,7 +66,7 @@ function CartProduct({ product }: CartProductProps) {
               </NumberInputButton>
             </div>
           </NumberInputContainer>
-          <CartPrice>{formatPrice(product.price)}원</CartPrice>
+          <CartPrice>{formatPrice(quantity * product.price)}원</CartPrice>
         </RightSide>
       </Container>
       <DivideLine />
